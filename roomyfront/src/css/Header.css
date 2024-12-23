@@ -1,0 +1,55 @@
+.header {
+    height: 6vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    color: white;
+    display: flex;
+    justify-content: space-between; /* 양 끝으로 배치 */
+    align-items: center;
+    padding: 1px 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 100; 
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    
+}
+
+.right-section {
+    display: flex;
+    align-items: center; /* 아이콘을 가운데 정렬 */
+    gap: 15px; /* 아이콘 간의 간격 */
+}
+
+.mypage, .notification {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+
+.title {
+    font-size: 15px;
+    color: black;
+    
+}
+
+.myPage-icon {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7); 
+}
+
+.notification-icon {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7); 
+}
+
+.back-icon {
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7); 
+}
