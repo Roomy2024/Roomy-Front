@@ -72,7 +72,7 @@ import DropDownMenu from "./component/DropDownMenu";
 import PostList from "./component/PostList";
 import CreatePostButton from "./component/CreatePostButton";
 
-
+//d
 function App() {
   const [posts, setPosts] = useState([]); //게시물 데이터를 관리하는 상태
   const [selectedSort, setSelectedSort] = useState("최신순"); // 정렬 기준을 관리하는 상태 ("최신순" 기본값)
