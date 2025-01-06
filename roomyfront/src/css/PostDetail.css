@@ -1,0 +1,144 @@
+/* PostDetail.css */
+
+.post-detail {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-detail .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .post-detail .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .post-detail .profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .post-detail .profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .post-detail .username {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .post-detail .location,
+  .post-detail .date {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .post-detail .post-content {
+    margin-bottom: 20px;
+  }
+  
+  .post-detail .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .post-detail .content {
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+    margin-bottom: 20px;
+  }
+  
+  .post-detail .post-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .post-detail .post-footer {
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  .post-detail .like-comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .post-detail .like-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .post-detail .comment-section {
+    margin-top: 20px;
+    padding-bottom: 80px; /* 하단바 높이만큼 여백 추가 (하단바 높이에 맞게 조절) */
+  }
+  
+  .post-detail .comment-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .post-detail .comment-item {
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .post-detail .comment-input {
+    display: flex;
+    gap: 10px;
+    position: sticky; /* 고정된 위치 */
+    bottom: 80px; /* 하단바 위로 올림 */
+    background-color: #fff; /* 배경색 추가 */
+    padding: 10px; /* 적당한 패딩 */
+    border-top: 1px solid #ddd; /* 상단 경계선 */
+  }
+  
+  .post-detail .comment-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .post-detail .comment-input button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .post-detail .post-image {
+    display: block; /* 블록 요소로 변경 (수평 중앙 정렬 가능) */
+    margin: 20px auto; /* 상하 여백 20px, 좌우 자동으로 중앙 정렬 */
+    width: auto; /* 이미지 원본 비율 유지 */
+    max-width: 100%; /* 부모 컨테이너 너비를 넘지 않도록 제한 */
+    height: auto; /* 이미지 비율 유지 */
+    border-radius: 8px; /* 이미지 모서리를 둥글게 처리 */
+  }
+
+  

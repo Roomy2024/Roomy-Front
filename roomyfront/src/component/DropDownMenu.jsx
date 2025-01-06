@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../css/DropDownMenu.css";
 
 // 숫자를 포맷팅하는 함수
@@ -11,8 +11,7 @@ const formatNumber = (number) => {
 };
 
 const DropDownMenu = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // 드롭다운 메뉴의 열림/닫힘 상태
-  const [selectedItem, setSelectedItem] = useState("게시판"); // 선택된 드롭다운 항목
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // 드롭다운 메뉴 열림/닫힘 상태
   const [selectedSort, setSelectedSort] = useState("최신순"); // 정렬 기준
   const [posts, setPosts] = useState([]); // 게시물 목록 상태
 
@@ -103,15 +102,14 @@ const DropDownMenu = () => {
           className={`dropdown-button ${isMenuOpen ? "open" : ""}`} // 메뉴 열림/닫힘에 따라 클래스 변경
           onClick={() => setIsMenuOpen(!isMenuOpen)} // 버튼 클릭 시 메뉴 토글
         >
-          {selectedItem} {/* 선택된 항목 표시 */}
+          {selectedSort} {/* 선택된 정렬 기준 표시 */}
         </button>
-        <div className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}> {/* 드롭다운 메뉴 */}
+        <div className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
           {menuItems.map((item) => (
             <div
               key={item}
               className="dropdown-item"
               onClick={() => {
-                setSelectedItem(item); // 항목 선택 시 업데이트
                 setIsMenuOpen(false); // 메뉴 닫기
               }}
             >
@@ -140,7 +138,7 @@ const DropDownMenu = () => {
       {/* 게시물 목록 */}
       <div className="posts-container">
         {posts.map((post) => (
-          <div key={post.id} className="post-card">
+          <Link to={`/post/${post.id}`} key={post.id} className="post-card">
             <div className="post-info">
               <div className="post-title">{post.title}</div> {/* 게시물 제목 */}
               <div className="post-content">{post.content}</div> {/* 게시물 내용 */}
@@ -150,14 +148,15 @@ const DropDownMenu = () => {
               <div className="post-actions">
                 <div
                   className="like-button"
-                  onClick={() => toggleLike(post.id)} // 좋아요 버튼 클릭 이벤트
+                  onClick={(e) => {
+                    e.preventDefault(); // Link 기본 동작 방지
+                    toggleLike(post.id);
+                  }}
                   style={{ cursor: "pointer" }}
                 >
-                  {/* 좋아요 하트와 좋아요 수 */}
                   {post.isLiked ? "❤️" : "🤍"} {formatNumber(post.likes)}
                 </div>
-                {/* 댓글 수 */}
-                <div>💬 {formatNumber(post.comments)}</div>
+                <div>💬 {formatNumber(post.comments)}</div> {/* 댓글 수 */}
               </div>
             </div>
             <img
@@ -165,7 +164,7 @@ const DropDownMenu = () => {
               src={post.imageUrl} // 게시물 이미지
               alt={`${post.title}`} // 이미지 대체 텍스트
             />
-          </div>
+          </Link>
         ))}
       </div>
     </div>
@@ -173,6 +172,10 @@ const DropDownMenu = () => {
 };
 
 export default DropDownMenu;
+
+
+
+
 
 
 

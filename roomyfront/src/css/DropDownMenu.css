@@ -98,6 +98,8 @@
 
 /* 게시물 카드 */
 .post-card {
+  text-decoration: none;
+  color: black;
   display: flex;
   align-items: center;
   justify-content: space-between;
