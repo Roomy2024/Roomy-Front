@@ -13,6 +13,7 @@ const formatNumber = (number) => {
 const DropDownMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 드롭다운 메뉴 열림/닫힘 상태
   const [selectedSort, setSelectedSort] = useState("최신순"); // 정렬 기준
+  const [selectedMenuItem, setSelectedMenuItem] = useState("게시판"); // 선택된 메뉴 항목
   const [posts, setPosts] = useState([]); // 게시물 목록 상태
 
   // 초기 데이터를 가져오는 함수
@@ -102,7 +103,7 @@ const DropDownMenu = () => {
           className={`dropdown-button ${isMenuOpen ? "open" : ""}`} // 메뉴 열림/닫힘에 따라 클래스 변경
           onClick={() => setIsMenuOpen(!isMenuOpen)} // 버튼 클릭 시 메뉴 토글
         >
-          {selectedSort} {/* 선택된 정렬 기준 표시 */}
+          {selectedMenuItem} {/* 선택된 메뉴 항목 표시 */}
         </button>
         <div className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
           {menuItems.map((item) => (
@@ -110,6 +111,7 @@ const DropDownMenu = () => {
               key={item}
               className="dropdown-item"
               onClick={() => {
+                setSelectedMenuItem(item); // 선택된 메뉴 항목 업데이트
                 setIsMenuOpen(false); // 메뉴 닫기
               }}
             >
@@ -172,7 +174,6 @@ const DropDownMenu = () => {
 };
 
 export default DropDownMenu;
-
 
 
 
