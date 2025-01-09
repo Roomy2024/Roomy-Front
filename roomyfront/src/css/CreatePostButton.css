@@ -1,0 +1,33 @@
+.create-post-button {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
+    background-color: #a3d5a1; /* 연한 초록색 */
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 살짝 그림자 효과 */
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+  
+  .create-post-button:hover {
+    background-color: #90c98b; /* 더 진한 초록색 */
+    transform: scale(1.1); /* 버튼 확대 */
+  }
+  
+  .create-post-button:active {
+    transform: scale(1); /* 클릭 시 원래 크기로 */
+  }
+  
+  .icon-pencil {
+    width: 20px;
+    height: 20px;
+    background: url("https://via.placeholder.com/20x20") no-repeat center center;
+    background-size: contain; /* 아이콘 삽입 */
+  }
+  
