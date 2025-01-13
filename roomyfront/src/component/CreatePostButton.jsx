@@ -1,23 +1,7 @@
-// import React from "react";
-// import "../css/CreatePostButton.css";
-
-
-
-// const CreatePostButton = ({ onClick }) => {
-//   return (
-//     <button className="create-post-button" onClick={onClick}>
-//       <i className="icon-pencil"></i>
-//     </button>
-//   );
-// };
-
-// export default CreatePostButton;
-
-
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CreatePostButton.css";
+import penIcon from "../assets/images/pen.png"; // pen.png 이미지 경로
 
 const CreatePostButton = () => {
   const navigate = useNavigate();
@@ -27,7 +11,7 @@ const CreatePostButton = () => {
       className="create-post-button"
       onClick={() => navigate("/create-post")}
     >
-      <i className="icon-pencil"></i>
+      <img src={penIcon} alt="Create Post" className="pen-icon" />
     </button>
   );
 };
