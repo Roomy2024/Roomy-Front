@@ -6,6 +6,9 @@ const CreatePost = () => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null); // 이미지 상태
   const [preview, setPreview] = useState(null); // 미리보기 이미지 URL
+  const [tags, setTags] = useState([]); // 선택된 태그 상태
+
+  const tagOptions = ["게시판", "꿀 팁", "레시피"]; // 고정된 태그 목록
 
   // 이미지 선택 핸들러
   const handleImageChange = (e) => {
@@ -13,6 +16,17 @@ const CreatePost = () => {
     if (file) {
       setImage(file);
       setPreview(URL.createObjectURL(file)); // 미리보기 URL 생성
+    }
+  };
+
+  // 태그 선택/해제 핸들러
+  const handleTagToggle = (tag) => {
+    if (tags.includes(tag)) {
+      // 태그가 이미 선택된 경우 제거
+      setTags(tags.filter((t) => t !== tag));
+    } else {
+      // 태그가 선택되지 않은 경우 추가
+      setTags([...tags, tag]);
     }
   };
 
@@ -27,6 +41,7 @@ const CreatePost = () => {
     if (image) {
       formData.append("image", image);
     }
+    formData.append("tags", JSON.stringify(tags)); // 선택된 태그 배열을 JSON 문자열로 변환
 
     // 서버로 데이터 전송 (예: axios 사용)
     console.log("FormData:", formData);
@@ -64,6 +79,23 @@ const CreatePost = () => {
           />
         </div>
       </form>
+
+      {/* 태그 선택 섹션 */}
+      <div className="create-post-tags">
+        <label>태그</label>
+        <div className="tag-options">
+          {tagOptions.map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              className={`tag-option ${tags.includes(tag) ? "selected" : ""}`}
+              onClick={() => handleTagToggle(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* 이미지 업로드 버튼과 미리보기 */}
       <div className="create-post-image-upload">

@@ -81,6 +81,8 @@ import PostDetail from "./component/PostDetail";
 import NotificationList from "./component/NotificationList";
 import CreatePostButton from "./component/CreatePostButton";
 import CreatePost from "./component/CreatePost";
+import MyPage from "./component/MyPage";
+import ProfileChangePage from "./component/ProfileChangePage";
 
 const App = () => {
   const [posts, setPosts] = useState([]);
@@ -132,6 +134,8 @@ const App = () => {
         <Route path="/notifications" element={<NotificationList />} />
         <Route path="/post/:id" element={<PostDetail />} />
         <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/mypage" element={<MyPage />}/>
+        <Route path="/profile-change" element={<ProfileChangePage />} />
       </Routes>
       <NavBar />
     </Router>

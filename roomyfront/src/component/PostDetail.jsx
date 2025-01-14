@@ -373,6 +373,23 @@ const PostDetail = () => {
   const [isBookmarked, setIsBookmarked] = useState(false); // 북마크 상태 추가
   const [isReportOpen, setIsReportOpen] = useState(false); // 신고 메뉴 상태 추가
   const [isBlocked, setIsBlocked] = useState(false); // 게시글 차단 상태 추가
+  const [selectedReason, setSelectedReason] = useState(""); // 신고 사유 상태
+
+
+  const reportReasons = [
+    "불법정보",
+    "욕설, 인신공격",
+    "음란성, 선정성",
+    "영리목적, 홍보성",
+    "개인정보 노출",
+    "도배",
+    "악성코드",
+    "혐오 발언, 암시",
+    "폭력, 위험한 조직",
+    "거짓 정보",
+  ];
+
+
 
   const [post, setPost] = useState({
     id: 1,
@@ -634,18 +651,52 @@ const PostDetail = () => {
 
       {/* 신고 메뉴 */}
       {isReportOpen && (
-        <div className="report-menu">
-          <div className="report-menu-content">
-            <button onClick={blockPost} className="report-menu-button">
-              신고
-            </button>
-            <button className="report-menu-cancel" onClick={closeReportMenu}>
-              취소
-            </button>
-          </div>
+    <div className="report-menu">
+      <div className="report-menu-content">
+        <h2>신고 사유를 선택하세요</h2>
+        <ul className="report-reasons">
+          {reportReasons.map((reason, index) => (
+            <li key={index}>
+              <label>
+                <input
+                type="radio"
+                name="report-reason"
+                value={reason}
+                onChange={(e) => setSelectedReason(e.target.value)}
+                checked={selectedReason === reason}
+                />
+                {reason}
+              </label>
+            </li>
+          ))}
+        </ul>
+        <div className="report-actions">
+          <button
+            onClick={() => {
+              if (!selectedReason) {
+                alert("신고 사유를 선택해주세요.");
+                return;
+              }
+              blockPost(); // 게시글 차단
+            }}
+            className="report-menu-button"
+          >
+            신고
+          </button>
+          <button
+           onClick={() => {
+             setSelectedReason(""); // 선택 초기화
+             closeReportMenu();
+            }}
+           className="report-menu-cancel"
+          >
+            취소
+          </button>
         </div>
-      )}
+     </div>
     </div>
+    )}
+  </div>
   );
 };
 

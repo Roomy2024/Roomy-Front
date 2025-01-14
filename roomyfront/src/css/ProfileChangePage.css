@@ -1,0 +1,108 @@
+/* 전체 컨테이너 */
+.profile-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* 프로필 이미지 컨테이너 */
+  .profile-image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* 프로필 이미지 */
+  .profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* 프로필 이미지가 없을 때 표시 */
+  .profile-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* 파일 선택 input 숨기기 */
+  .file-input {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* 파일 선택 버튼 스타일 */
+  .file-label {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  /* 프로필 정보 섹션 */
+  .profile-info {
+    margin-top: 20px;
+  }
+  
+  /* 편집 컨테이너 */
+  .edit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 편집 input */
+  .edit-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+  }
+  
+  /* 저장 버튼 */
+  .save-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* 편집 버튼 */
+  .edit-button {
+    margin-left: 10px;
+    padding: 5px;
+    border: none;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    cursor: pointer;
+  }
+  
+  /* 정보 컨테이너 */
+  .info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  

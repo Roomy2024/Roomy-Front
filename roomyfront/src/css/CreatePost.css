@@ -73,3 +73,34 @@
     border-radius: 4px;
   }
   
+
+
+  /* 태그 섹션 스타일 */
+.create-post-tags {
+  margin: 20px 0;
+}
+
+.tag-options {
+  display: flex;
+  gap: 10px; /* 태그 버튼 간격 */
+}
+
+.tag-option {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.tag-option.selected {
+  background-color: #a3d5a1;
+  color: white;
+  border-color: #90c98b;
+}
+
+.tag-option:hover {
+  background-color: #e0e0e0;
+}

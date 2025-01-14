@@ -202,11 +202,17 @@
 
 
 
-
-
-
-
-
+/* 신고 사유 창 애니메이션 */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%); /* 화면 아래에서 시작 */
+    opacity: 0; /* 투명하게 시작 */
+  }
+  to {
+    transform: translateY(0); /* 원래 위치로 이동 */
+    opacity: 1; /* 완전히 보이게 */
+  }
+}
 
 /* 신고 메뉴 스타일 */
 .report-menu {
@@ -220,7 +226,16 @@
   border-top-right-radius: 12px;
   z-index: 1000;
   padding: 16px;
+  animation: slide-up 0.3s ease; /* 신고 창 열 때 애니메이션 추가 */
 }
+
+.report-actions {
+  display: flex; /* 버튼을 가로로 배치 */
+  justify-content: space-between; /* 버튼을 양쪽 끝으로 떨어뜨림 */
+  align-items: center; /* 버튼의 세로 정렬 */
+  margin-top: 20px; /* 버튼과 위 내용 간의 간격 추가 */
+}
+
 
 .report-menu-content {
   display: flex;
@@ -228,30 +243,67 @@
   gap: 12px;
 }
 
+.report-reasons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+}
+
+.report-reasons li {
+  margin-bottom: 10px;
+}
+
+.report-reasons input {
+  margin-right: 8px;
+}
+
+.report-menu-button,
+.report-menu-cancel {
+  flex: 1; /* 버튼이 동일한 크기를 가짐 */
+  max-width: px; /* 버튼 최대 크기 설정 (필요 시) */
+  padding: 16px; /* 버튼 크기 확대 */
+  font-size: 18px; /* 글씨 크기 확대 */
+  margin: 0 10px; /* 버튼 간의 간격 추가 */
+}
+
 .report-menu-button {
   background: #ff4d4f;
   color: #fff;
   border: none;
-  padding: 12px;
+  /* padding: 12px; */
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  text-align:center;
+}
+
+.report-menu-button:hover {
+  background: #e63946;
 }
 
 .report-menu-cancel {
   background: #ddd;
   color: #333;
   border: none;
-  padding: 12px;
+  /* padding: 12px; */
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  text-align: center;
+  
+}
+
+.report-menu-cancel:hover {
+  background: #ccc;
 }
 
 /* 차단된 게시물 스타일 */
-.post-blocked {
+.blocked-message {
   text-align: center;
   margin: 20px auto;
   color: #888;
   font-size: 18px;
 }
+
+
