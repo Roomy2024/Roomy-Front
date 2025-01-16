@@ -366,6 +366,9 @@ import "../css/PostDetail.css";
 import sampleImage from "../assets/images/안승현.jpg"; // 로컬 이미지 import
 import bookmarkDefault from "../assets/images/북마크 저장 전.png"; // 기본 북마크 아이콘
 import bookmarkActive from "../assets/images/북마크 저장 후.png"; // 활성화된 북마크 아이콘
+// import { useSelector } from "react-redux"; // Redux 상태 가져오기
+// import axiosInstance from "../utils/axiosInstance"; // Axios 인스턴스 import
+
 
 const PostDetail = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -374,6 +377,9 @@ const PostDetail = () => {
   const [isReportOpen, setIsReportOpen] = useState(false); // 신고 메뉴 상태 추가
   const [isBlocked, setIsBlocked] = useState(false); // 게시글 차단 상태 추가
   const [selectedReason, setSelectedReason] = useState(""); // 신고 사유 상태
+
+  // const { user } = useSelector((state) => state.auth); // Redux에서 사용자 상태 가져오기
+
 
 
   const reportReasons = [
