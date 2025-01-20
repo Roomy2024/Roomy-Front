@@ -2,26 +2,44 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Header from './component/Header';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes ,  Route,useLocation,
+} from 'react-router-dom';
 import NavBar from './component/NavBar';
+import LoginPage from './page/LoginPage'; 
 import Login from './component/Login';
+import { useMediaQuery } from "react-responsive";
 
 function App() {
-   const [hello, setHello] = useState('')
-
-    useEffect(() => {
-        axios.get('/api/community')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-    }, []);
-
+  const location = useLocation();
+  const isDeskTop = useMediaQuery({
+    query: "(min-width:769px)",
+  });
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const showNavbarPaths = ["/","/home", "/schedule", "/map", "/mypage"];
+  const showNavbarWebPaths = [
+    "/",
+    "/home"
+  ]
     return (
-      <Router>
-        <Header></Header>
-        <NavBar></NavBar>
-      </Router>
+      <div className='App'>
+        {showNavbarPaths.includes(location.pathname) && isMobile && (
+          <>
+            <Header />
+            <NavBar />
+          </>
+        )}        
+        <Routes>
+          <Route path="/loginPage" element={<LoginPage></LoginPage>}></Route>
+        </Routes>
+      </div>
       
     );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
