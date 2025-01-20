@@ -246,6 +246,9 @@
   padding: 0;
   padding-bottom: 20px;
   margin: 0;
+  max-height: 550px; /* 스크롤 가능 영역 설정 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
 }
 
 .region-column .region-item {
