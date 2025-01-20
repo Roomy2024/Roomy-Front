@@ -1,0 +1,26 @@
+.middle {
+    margin-top: 55%;
+    text-align: center;
+}
+
+.middle-text {
+    margin-top: 5%;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.kakao-btn-wapper {
+  margin-top: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+
+
+.login-btn {
+    width: 80%;
+    height: 60px;
+    margin-top: 10%;
+}
