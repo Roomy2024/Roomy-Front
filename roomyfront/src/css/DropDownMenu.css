@@ -1,0 +1,164 @@
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* 게시판 드롭다운 컨테이너 */
+.menu-container {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  padding: 10px 0;
+  position: relative; /* 드롭다운 메뉴 위치를 설정 */
+}
+
+/* 드롭다운 버튼 */
+.dropdown-button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+/* 드롭다운 버튼에 기본 ▼ 추가 */
+.dropdown-button::after {
+  content: "▼"; /* 기본 세모 아이콘 */
+  font-size: 12px;
+  margin-left: 5px;
+  position: absolute;
+  top: 50%;
+  right: -20px; /* 적절히 위치 조정 */
+  transform: translateY(-50%);
+}
+
+/* 드롭다운 메뉴 열림 상태에서 ▲로 변경 */
+.dropdown-button.open::after {
+  content: "▲"; /* 열린 상태의 세모 */
+}
+
+/* 드롭다운 메뉴 */
+.dropdown-menu {
+  position: absolute;
+  top: 40px; /* 드롭다운 버튼 바로 아래에 위치 */
+  left: 50%; /* 가운데 정렬 */
+  transform: translateX(-46%);
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  z-index: 1000;
+  transition: max-height 0.2s ease-in-out; /* 부드러운 애니메이션 */
+  overflow: hidden;
+  max-height: 0; /* 기본값: 숨김 */
+  width: 120px;
+}
+
+/* 드롭다운 메뉴 활성화 */
+.dropdown-menu.open {
+  max-height: 500px; /* 메뉴가 열릴 때 최대 높이 */
+}
+
+/* 드롭다운 항목 */
+.dropdown-item {
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: #f2f2f2;
+}
+
+/* 정렬 버튼 */
+.sort-container {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  padding: 10px 20px;
+  background-color: #fff;
+  margin-top: 10px;
+  font-size : 12px;
+}
+
+/* 게시물 목록 */
+.posts-container {
+  padding: 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* 게시물 간 간격 */
+}
+
+/* 게시물 카드 */
+.post-card {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+  gap: 15px; /* 이미지와 텍스트 간격 */
+}
+
+/* 이미지 오른쪽 정렬 */
+.post-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #e0e0e0; /* 기본 배경 */
+  margin-left: 15px; /* 텍스트와의 간격 */
+}
+
+/* 게시물 정보 (글자 부분) */
+.post-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+  text-align: left; /* 글자 왼쪽 정렬 */
+}
+.post-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.post-content {
+  font-size: 14px;
+  color: #666;
+}
+
+.post-meta {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 좋아요/댓글 */
+.post-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 10px;
+  color: #555;
+}
+
+
+
+
+
+
+
+
+

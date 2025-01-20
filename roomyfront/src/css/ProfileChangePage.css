@@ -1,0 +1,288 @@
+/* 전체 컨테이너 */
+.profile-container {
+  text-align: center;
+  max-width: 500px;
+  margin: 20px auto 0;
+}
+
+/* 프로필 이미지 컨테이너 */
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* 프로필 이미지 */
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* 프로필 이미지가 없을 때 표시 */
+.profile-placeholder {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #555;
+}
+
+/* 파일 선택 input 숨기기 */
+.file-input {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* 파일 선택 버튼 스타일 */
+.file-label {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* 프로필 정보 섹션 */
+.profile-info {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+/* 편집 컨테이너 */
+.edit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 편집 input */
+.edit-input {
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* 저장 버튼 */
+.save-button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 편집 버튼 */
+.edit-button {
+  margin-left: 10px;
+  padding: 5px;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  right: 4px;
+}
+
+/* 정보 컨테이너 */
+.info-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/*** 프로필 미리보기 ***/
+.profile-preview-container {
+  width: 100%;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.profile-preview-wrap {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.profile-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.circle-container {
+  position: relative;
+  width: 96%;
+  aspect-ratio: 1 / 1;
+}
+
+.circle-mask {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7);
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  position: absolute; /* 하단에 고정 */
+  bottom: 1rem;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.nav-button {
+  padding: 12px 20px;
+  border: 1px solid #000;
+  border-radius: 6px;
+  background-color: white;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.nav-button:hover {
+  background-color: #f5f5f5;
+}
+
+/*** 주소 선택 ***/
+.region-selector-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.region-selector-container h2 {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.region-selector-container .button-container {
+  all: unset;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px 12px;
+}
+
+.region-selector {
+  display: flex;
+  justify-content: space-between;
+}
+
+.region-column {
+  width: 100%;
+}
+
+.region-column h3 {
+  font-size: 16px;
+  background-color: #afce8f;
+  padding: 12px 0;
+  color: white;
+  width: 100%;
+  text-align: center;
+  position: sticky;
+  top: 52px;
+}
+
+.region-column:first-child h3 {
+  border-left: none;
+}
+
+.region-column .region-list {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+  padding-bottom: 20px;
+  margin: 0;
+  max-height: 550px; /* 스크롤 가능 영역 설정 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  scroll-behavior: smooth; /* 부드러운 스크롤 */
+}
+
+.region-column .region-item {
+  padding: 12px 0;
+}
+
+.region-column .select-item {
+  color: #afce8f;
+  font-weight: bold;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0 20px;
+}
+
+.search-input {
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 24px 8px 8px;
+  width: 100%;
+}
+
+.search-button {
+  padding: 5px;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  right: 24px;
+  color: #afce8f;
+}
