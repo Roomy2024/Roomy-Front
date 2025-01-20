@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "../css/ProfileChangePage.css";
+import "../../css/ProfileChangePage.css";
 import ImagePreviewer from "./ImagePreviewer";
 import RegionSelector from "./RegionSelector";
 

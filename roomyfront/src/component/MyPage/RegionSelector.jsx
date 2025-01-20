@@ -1,7 +1,7 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import regions from "../regions.json";
+import regions from "../../regions.json";
 
 const RegionSelector = ({ address, onClickCancel, onClickSave }) => {
   // 지역 선택 상태 초기화: 주소를 받아서 시, 군, 구, 동을 초기화

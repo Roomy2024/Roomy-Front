@@ -61,7 +61,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import "../css/NotificationList.css";
+import "../../css/NotificationList.css";
 
 const NotificationList = () => {
   const [notifications, setNotifications] = useState([]);

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "../css/CreatePost.css";
+import "../../css/CreatePost.css";
+import { createPost } from "../../api/PostApi"; // 게시물 생성 API 호출 함수
 
-const CreatePost = () => {
+const CreatePost = ({ addNewPost }) => { // addNewPost 함수 props로 받음
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null); // 이미지 상태
@@ -22,42 +23,53 @@ const CreatePost = () => {
   // 태그 선택/해제 핸들러
   const handleTagToggle = (tag) => {
     if (tags.includes(tag)) {
-      // 태그가 이미 선택된 경우 제거
-      setTags(tags.filter((t) => t !== tag));
+      setTags(tags.filter((t) => t !== tag)); // 선택 해제
     } else {
-      // 태그가 선택되지 않은 경우 추가
-      setTags([...tags, tag]);
+      setTags([...tags, tag]); // 선택 추가
     }
   };
 
   // 게시물 제출 핸들러
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // FormData 객체 생성
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
+    formData.append("title", title); // 제목 추가
+    formData.append("content", content); // 내용 추가
     if (image) {
-      formData.append("image", image);
+      formData.append("images", image); // 이미지 파일 추가
     }
-    formData.append("tags", JSON.stringify(tags)); // 선택된 태그 배열을 JSON 문자열로 변환
+    formData.append("type", tags.join(",")); // 태그 배열을 문자열로 변환 후 추가
+    formData.append("userId", 1); // 고정된 userId 추가
 
-    // 서버로 데이터 전송 (예: axios 사용)
-    console.log("FormData:", formData);
-    alert("게시물이 저장되었습니다!");
+    try {
+      await createPost(formData); // API 호출
+      alert("게시물이 저장되었습니다!");
+      // 폼 초기화
+      setTitle("");
+      setContent("");
+      setImage(null);
+      setPreview(null);
+      setTags([]);
+      if (addNewPost) addNewPost(formData); // 새로운 게시물을 추가
+    } catch (error) {
+      console.error("게시물 저장 중 오류 발생:", error);
+    }
   };
 
   return (
     <div className="create-post-container">
-      {/* 작성 완료 버튼 (우측 상단) */}
-      <button type="submit" className="create-post-submit" onClick={handleSubmit}>
+      <button
+        type="submit"
+        className="create-post-submit"
+        onClick={handleSubmit}
+      >
         작성 완료
       </button>
 
       <h1>게시물 작성</h1>
 
-      {/* 게시물 입력 폼 */}
       <form>
         <div>
           <label>제목</label>
@@ -80,7 +92,6 @@ const CreatePost = () => {
         </div>
       </form>
 
-      {/* 태그 선택 섹션 */}
       <div className="create-post-tags">
         <label>태그</label>
         <div className="tag-options">
@@ -97,7 +108,6 @@ const CreatePost = () => {
         </div>
       </div>
 
-      {/* 이미지 업로드 버튼과 미리보기 */}
       <div className="create-post-image-upload">
         <label htmlFor="file-upload" className="create-post-upload-label">
           이미지 업로드

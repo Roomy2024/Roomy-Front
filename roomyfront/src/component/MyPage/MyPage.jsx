@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/MyPage.css"; // 스타일 파일 import
-import bookmarkIcon from "../assets/images/북마크 저장 후.png"; // 북마크 아이콘 import
-import blockUserIcon from "../assets/images/block-user.png"; // 차단 아이콘 import
+import "../../css/MyPage.css"; // 스타일 파일 import
+import bookmarkIcon from "../../asset/images/북마크 저장 후.png"; // 북마크 아이콘 import
+import blockUserIcon from "../../asset/images/block-user.png"; // 차단 아이콘 import
 
 const MyPage = () => {
   const navigate = useNavigate();
