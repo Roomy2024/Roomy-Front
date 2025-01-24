@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 /* 게시판 드롭다운 컨테이너 */
@@ -90,6 +90,7 @@
 /* 게시물 목록 */
 .posts-container {
   padding: 20px;
+  padding-bottom: 50px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -116,7 +117,6 @@
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
-  background-color: #e0e0e0; /* 기본 배경 */
   margin-left: 15px; /* 텍스트와의 간격 */
 }
 
@@ -153,6 +153,7 @@
   margin-top: 10px;
   color: #555;
 }
+
 
 
 

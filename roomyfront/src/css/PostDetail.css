@@ -73,6 +73,7 @@
   padding-top: 20px;
 }
 
+
 .post-detail .like-comment {
   display: flex;
   justify-content: space-between;
@@ -199,6 +200,70 @@
   gap: 10px;
   margin-top: 10px;
 }
+
+
+/* 슬라이더 컨테이너 */
+.post-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+/* 슬라이더 내부 이미지 */
+.slider-wrapper {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.post-image {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* 슬라이더 버튼 */
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.slider-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slider-button.prev {
+  left: 10px;
+}
+
+.slider-button.next {
+  right: 10px;
+}
+
+/* 비활성화된 버튼 */
+.slider-button:disabled {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+}
+
+
+
 
 
 
