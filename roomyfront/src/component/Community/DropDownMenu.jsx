@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../../css/DropDownMenu.css";
-import { fetchPosts } from "../../api/PostApi";
+import { fetchPosts } from "../../api/CommunityApi";
 
 // 숫자를 포맷팅하는 함수 (ex: 10000 이상 -> "1.0만")
 const formatNumber = (number) => {

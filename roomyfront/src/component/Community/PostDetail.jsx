@@ -318,7 +318,9 @@ import {
   addReply,
   fetchCommentsByCommunityId,
 } from "../../api/CommentApi"; // 댓글 API
-import { fetchPostById, toggleLikePost } from "../../api/PostApi"; // 게시물 API
+import { fetchPostById } from "../../api/CommunityApi";
+import { toggleLikePost } from "../../api/LikeApi";
+
 import bookmarkDefault from "../../asset/images/북마크 저장 전.png"; // 기본 북마크 아이콘
 import bookmarkActive from "../../asset/images/북마크 저장 후.png"; // 활성화된 북마크 아이콘
 import sampleImage from "../../asset/images/안승현.jpg"; // 로컬 이미지 import

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/CreatePost.css";
-import { createPost } from "../../api/PostApi";
+import { createPost } from "../../api/CommunityApi";
 
 const CreatePost = ({ addNewPost }) => {
   const [title, setTitle] = useState("");
