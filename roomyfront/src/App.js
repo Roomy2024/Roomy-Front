@@ -1,49 +1,3 @@
-
-// import React, {useEffect, useState} from 'react';
-// import axios from 'axios';
-// import Header from './component/Header';
-// import { BrowserRouter as Router, Routes ,  Route,useLocation,
-// } from 'react-router-dom';
-// import NavBar from './component/NavBar';
-// import LoginPage from './page/LoginPage'; 
-// import Login from './component/Login';
-// import { useMediaQuery } from "react-responsive";
-
-// function App() {
-//   const location = useLocation();
-//   const isDeskTop = useMediaQuery({
-//     query: "(min-width:769px)",
-//   });
-//   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-//   const showNavbarPaths = ["/","/home", "/schedule", "/map", "/mypage"];
-//   const showNavbarWebPaths = [
-//     "/",
-//     "/home"
-//   ]
-//     return (
-//       <div className='App'>
-//         {showNavbarPaths.includes(location.pathname) && isMobile && (
-//           <>
-//             <Header />
-//             <NavBar />
-//           </>
-//         )}        
-//         <Routes>
-//           <Route path="/loginPage" element={<LoginPage></LoginPage>}></Route>
-//         </Routes>
-//       </div>
-      
-//     );
-// }
-
-// export default function AppWrapper() {
-//   return (
-//     <Router>
-//       <App />
-//     </Router>
-//   );
-// }
-
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; // Navigate 추가
@@ -58,6 +12,7 @@ import CreatePost from "./component/Community/CreatePost";
 import MyPage from "./component/MyPage/MyPage";
 import ProfileChangePage from "./component/MyPage/ProfileChangePage";
 import LoginPage from "./page/LoginPage";
+import BookmarkPage from "./component/MyPage/BookmarkPage";
 
 const App = () => {
   const [posts, setPosts] = useState([]); // 게시물 상태
@@ -70,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/community");
+        const response = await axios.get("http://43.202.98.145:8000/api/community/getall");
         setPosts(response.data);
       } catch (error) {
         console.error("게시물 데이터를 가져오는 중 오류가 발생했습니다.", error);
@@ -131,10 +86,13 @@ const App = () => {
 
         {/* 다른 페이지 경로들 */}
         <Route path="/notifications" element={<NotificationList />} />
-        <Route path="/post/:id" element={<PostDetail />} />
+        <Route path="/" element={<DropDownMenu />} />
+        <Route path="/community/:id" element={<PostDetail />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/profile-change" element={<ProfileChangePage />} />
         <Route path="/loginPage" element={<LoginPage />} />
+        <Route path="/edit/:id" element={<CreatePost />} />
+        <Route path="/bookmark" element={<BookmarkPage />} />
       </Routes>
 
       {/* NavBar는 모든 페이지에서 표시 */}

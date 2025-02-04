@@ -48,7 +48,7 @@ const MyPage = () => {
           <img src={blockUserIcon} alt="차단 목록 아이콘" className="menu-icon" />
           <span>차단 목록</span>
         </div>
-        <div className="menu-item" onClick={() => navigate("/bookmarks")}>
+        <div className="menu-item" onClick={() => navigate("/bookmark")}>
           <img src={bookmarkIcon} alt="스크랩북 아이콘" className="menu-icon" />
           <span>스크랩북</span>
         </div>

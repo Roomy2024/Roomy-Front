@@ -14,6 +14,12 @@ const formatNumber = (number) => {
   return number.toString();
 };
 
+export const fixImageUrl = (url) => {
+  if (!url) return "";
+  if (url.startsWith("http")) return url;  // 이미 절대 URL이면 그대로 반환
+  return `http://43.202.98.145:8000/api${url}`; // 상대 URL일 경우만 가공
+};
+
 const DropDownMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // 드롭다운 메뉴 열림/닫힘 상태
   const [selectedSort, setSelectedSort] = useState("최신순"); // 정렬 기준
@@ -162,15 +168,28 @@ const DropDownMenu = () => {
       </div>
 
 {/* 게시물 이미지 */}
-{post.imageUrls && post.imageUrls.length > 0 ? (
+{/* {post.imageUrls && post.imageUrls.length > 0 ? (
   <img
     className="post-image"
-    src={`http://localhost:8000/api${post.imageUrls[0]}`} // 첫 번째 이미지 URL 가공
+    src={`http://43.202.98.145:8000/api${post.imageUrls[0]}`} // 첫 번째 이미지 URL 가공
     alt="게시물 이미지"
   />
 ) : (
   <div className="no-image">이미지 없음</div> // 이미지가 없는 경우
+)} */}
+
+{/* 게시물 이미지 */}
+{post.imageUrls && post.imageUrls.length > 0 ? (
+  <img
+    className="post-image"
+    src={fixImageUrl(post.imageUrls[0])} // 이미지 URL 변환 함수 적용
+    alt="게시물 이미지"
+    onError={(e) => (e.target.style.display = "none")} // 이미지 로딩 실패 시 숨김 처리
+  />
+) : (
+  <div className="no-image">이미지 없음</div> // 이미지가 없는 경우
 )}
+
     </Link>
   ))}
 </div>
