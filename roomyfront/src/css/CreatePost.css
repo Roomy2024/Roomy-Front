@@ -1,0 +1,141 @@
+/* CreatePost 전체 컨테이너 */
+.create-post-container {
+    position: relative; /* 작성 완료 버튼의 절대 위치 설정을 위한 상대 위치 */
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* 제목과 텍스트 입력 필드 공통 스타일 */
+  .create-post-input,
+  .create-post-textarea {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* 제목과 텍스트 입력 필드의 높이 설정 */
+  .create-post-textarea {
+    height: 150px;
+  }
+  
+  /* 작성 완료 버튼 스타일 */
+  .create-post-submit {
+    position: absolute; /* 우측 상단에 배치 */
+    top: 10px;
+    right: 10px;
+    background-color: #a3d5a1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .create-post-submit:hover {
+    background-color: #90c98b; /* hover 효과 */
+  }
+  
+/* 이미지 업로드 섹션 스타일 */
+.create-post-image-upload {
+  margin: 20px 0;
+  text-align: center; /* 가운데 정렬 */
+  position: relative;
+  z-index: 1; /* navbar보다 위에 표시 */
+}
+
+.create-post-image-upload .image-previews {
+  display: flex;
+  flex-wrap: wrap; /* 줄 바꿈 활성화 */
+  gap: 10px; /* 이미지 간 간격 */
+  justify-content: center; /* 가운데 정렬 */
+}
+
+.create-post-image-upload .image-previews img {
+  flex-basis: calc(50% - 10px); /* 한 줄에 두 개 (10px은 gap 고려) */
+  max-width: calc(50% - 10px); /* 최대 폭 제한 */
+  height: 200px; /* 고정 높이 */
+  object-fit: cover; /* 이미지 비율 유지하며 잘림 처리 */
+  border: 1px solid #ccc; /* 경계선 */
+  border-radius: 5px; /* 둥근 모서리 */
+}
+
+/* 컨테이너의 내용이 navbar에 의해 잘리지 않도록 설정 */
+.create-post-container {
+  position: relative;
+  overflow: visible; /* 컨테이너의 내용 잘리지 않음 */
+  padding-bottom: 100px; /* navbar 아래 여유 공간 추가 */
+}
+
+/* Navbar 고정 */
+.navbar {
+  position: fixed; /* 화면 상단 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10; /* 우선순위 설정 */
+}
+
+  
+  /* 업로드 입력 필드 숨김 + 스타일 추가 */
+  .create-post-file-input {
+    display: none; /* 기본 파일 선택 버튼 숨기기 */
+  }
+  
+  .create-post-upload-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #a3d5a1;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .create-post-upload-label:hover {
+    background-color: #90c98b; /* hover 효과 */
+  }
+  
+  /* 미리보기 이미지 스타일 */
+  .create-post-image-preview {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 10px auto; /* 이미지 간격 및 가운데 정렬 */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+
+
+  /* 태그 섹션 스타일 */
+.create-post-tags {
+  margin: 20px 0;
+}
+
+.tag-options {
+  display: flex;
+  gap: 10px; /* 태그 버튼 간격 */
+}
+
+.tag-option {
+  padding: 8px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.tag-option.selected {
+  background-color: #a3d5a1;
+  color: white;
+  border-color: #90c98b;
+}
+
+.tag-option:hover {
+  background-color: #e0e0e0;
+}

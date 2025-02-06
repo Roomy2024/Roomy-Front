@@ -3,7 +3,8 @@ import axios from "axios";
 const createAxios = (middlePath = "") => {
     const token = localStorage.getItem("accessToken"); // 로컬스토리지나 쿠키에 저장된 JWT 토큰 가져오기
     const instance = axios.create({
-        baseURL: `http://localhost:8000/api${middlePath}`,
+        // baseURL: `http://localhost:8000/api${middlePath}`,
+        baseURL: 'http://43.202.98.145:8000/api${middlePath}',
         headers: {
             "Content-Type": "application/json",
             Authorization: token ? `Bearer ${token}` : "", // Authorization 헤더에 JWT 추가

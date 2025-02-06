@@ -24,7 +24,7 @@ const NavBar = () =>{
                     <FontAwesomeIcon icon={faLocation}></FontAwesomeIcon>
                 </div>
             </Link>
-            <Link to = "/Profile" className="nav-link">
+            <Link to = "/MyPage" className="nav-link">
                 <div>
                     <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                 </div>
