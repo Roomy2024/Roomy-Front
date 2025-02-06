@@ -61,7 +61,7 @@ const App = () => {
 
       <Routes>
         {/* 기본 경로로 /Community로 리다이렉트 */}
-        <Route path="/" element={<Navigate to="/Community" />} />
+        <Route path="/" element={<Navigate to="/community" />} />
 
         {/* Community 경로 */}
         <Route
