@@ -8,6 +8,7 @@ import NavBar from './component/NavBar';
 import LoginPage from './page/LoginPage'; 
 import Login from './component/Login';
 import { useMediaQuery } from "react-responsive";
+import { UserProvider } from "./api/UserContext";
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
     "/home"
   ]
     return (
+      
       <div className='App'>
         {showNavbarPaths.includes(location.pathname) && isMobile && (
           <>
