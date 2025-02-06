@@ -92,6 +92,7 @@ const App = () => {
         <Route path="/profile-change" element={<ProfileChangePage />} />
         <Route path="/loginPage" element={<LoginPage />} />
         <Route path="/edit/:id" element={<CreatePost />} />
+        <Route path="/loginPage" element={<LoginPage></LoginPage>}></Route>
         <Route path="/bookmark" element={<BookmarkPage />} />
       </Routes>
 
