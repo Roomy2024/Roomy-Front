@@ -28,7 +28,7 @@ export const toggleBookmark = async (userId, communityId) => {
   export const fetchBookmarkStatus = async (userId, communityId) => {
     try {
       const response = await axios.get(`${BASE_URL}/bookmarks/${communityId}/user/${userId}`);
-      console.log("📌 북마크 상태 응답:", response.data);
+      
       return response.data; // true 또는 false 반환
     } catch (error) {
       console.error("북마크 상태 조회 오류:", error);

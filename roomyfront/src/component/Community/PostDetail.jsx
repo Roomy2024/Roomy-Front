@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchBookmarkStatus, toggleBookmark } from "../../api/BookmarkApi";
-import {
-  addComment,
-  addReply,
-  fetchCommentsByCommunityId,
-} from "../../api/CommentApi"; // 댓글 API
-import { deletePost, fetchPostById } from "../../api/CommunityApi";
-import { getLikeCount, toggleLikePost } from "../../api/LikeApi";
+import CommentApi from "../../api/CommentApi";
+import CommunityApi from "../../api/CommunityApi";
+import LikeApi from "../../api/LikeApi"
 import bookmarkDefault from "../../asset/images/북마크 저장 전.png"; // 기본 북마크 아이콘
 import bookmarkActive from "../../asset/images/북마크 저장 후.png"; // 활성화된 북마크 아이콘
-import sampleImage from "../../asset/images/안승현.jpg"; // 로컬 이미지 import
+import sampleImage from "../../asset/images/user-icon.png"; // 로컬 이미지 import
 import "../../css/PostDetail.css";
+import ReportApi from "../../api/ReportApi";
+
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [isLiking, setIsLiking] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); // 점 3개 메뉴 상태 추가
@@ -29,7 +28,7 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const userId = "1"; // 현재 로그인한 사용자 ID (테스트 값, 실제 구현에서는 동적으로 할당)
   const [replyContent, setReplyContent] = useState({}); // 대댓글 입력 상태
-
+  
   //   const { user } = useAuth();
   //   const userId = user?.id; // 로그인한 사용자 ID
 
@@ -46,89 +45,60 @@ const PostDetail = () => {
     "거짓 정보",
   ];
 
-  // 게시물 데이터 가져오기
   useEffect(() => {
     const fetchPost = async () => {
       try {
         console.log("Fetching post with ID:", communityId);
-
+  
         // 게시물 데이터 가져오기
-        const postData = await fetchPostById(communityId);
-        console.log("Fetched Post Data:", postData); // 데이터 확인
-
+        const postData = await CommunityApi.fetchPostById(communityId);
+        
+  
         // 이미지 URL 디버깅
         if (postData.imageUrls && postData.imageUrls.length > 0) {
           console.log("Fetched Image URLs:", postData.imageUrls); // 이미지 URL 출력
         } else {
           console.warn("이미지 URL이 비어 있습니다.");
         }
-
+  
         // 댓글 데이터 가져오기
-        const commentsData = await fetchCommentsByCommunityId(communityId);
+        const commentsData = await CommentApi.fetchCommentsByCommunityId(communityId);
+        
+
+        const isLikedStatus = await LikeApi.checkIsLiked(communityId, userId);
+        const likeCountData = await LikeApi.getLikeCount(communityId);
 
         // 상태 설정
         setPost(postData);
         setIsLiked(postData.isLiked || false);
-        setLikeCount(postData.likeCount || 0);
+        setLikeCount(postData.likeCount ?? 0);
         setComments(commentsData || []);
       } catch (error) {
         console.error("게시물 데이터를 가져오는 중 오류 발생:", error);
       }
-
-      const handleAddComment = async () => {
-        if (newComment.trim()) {
-          try {
-            const newCommentData = await addComment(
-              communityId,
-              userId,
-              newComment
-            ); // userId를 1로 예시 지정
-            setComments([...comments, newCommentData]); // 기존 댓글에 새 댓글 추가
-            setNewComment("");
-          } catch (error) {
-            console.error("댓글 추가 중 오류 발생:", error);
-          }
-        }
-      };
-
-      const handleAddReply = async (commentId) => {
-        console.log("📌 클릭된 댓글 ID:", commentId);
-
-        // reply 객체에 해당 commentId에 대한 값이 존재하고 공백이 아닌지 확인
-        if (reply[commentId]?.trim()) {
-          try {
-            const userId = localStorage.getItem("userId");
-            console.log("📌 대댓글 API 요청 데이터:", {
-              commentId,
-              userId,
-              content: reply[commentId],
-            });
-
-            const newReplyData = await addReply(
-              commentId,
-              userId,
-              reply[commentId]
-            );
-
-            // 댓글 목록 업데이트: 해당 댓글의 대댓글 배열에 새 대댓글 추가
-            setComments((prevComments) =>
-              prevComments.map((comment) =>
-                comment.id === commentId
-                  ? { ...comment, replies: [...comment.replies, newReplyData] }
-                  : comment
-              )
-            );
-            setReply({ ...reply, [commentId]: "" });
-          } catch (error) {
-            console.error("대댓글 추가 중 오류 발생:", error);
-          }
-        }
-      };
     };
-
+  
     fetchPost();
   }, [communityId]);
+  
 
+  useEffect(() => {
+    const fetchLikeData = async () => {
+      try {
+        const isLikedStatus = await LikeApi.checkIsLiked(communityId, userId);
+        const likeCount = await LikeApi.getLikeCount(communityId);
+    
+        setIsLiked(isLikedStatus);
+        setLikeCount(likeCount);
+      } catch (error) {
+        console.error("좋아요 데이터 불러오기 오류:", error);
+      }
+    };
+  
+    fetchLikeData();
+  }, [communityId, userId]);
+
+  
   useEffect(() => {
     const checkBookmarkStatus = async () => {
       try {
@@ -170,44 +140,47 @@ const PostDetail = () => {
   };
 
 
-  const toggleLike = async () => {
-    try {
-      // 좋아요 토글 API 호출
-      const updatedLikeData = await toggleLikePost({
-        // id: communityId,
-        // type: "community",
-        communityId: communityId,
-        userId: userId, // 사용자 ID
-        isLiked: !isLiked, // 현재 상태를 반전해서 전달
-        baseURL: "http://43.202.98.145:8000/api/", // 기본 API URL
-      });
-
-      setIsLiked(updatedLikeData);
-      setLikeCount(updatedLikeData);
-    } catch (error) {
-      console.error("좋아요 처리 중 오류 발생:", error);
-    }
-  };
-
+    // ✅ 좋아요 토글 함수 (중복 실행 방지 포함)
+    const toggleLike = async () => {
+      if (isLiking) return;
+      setIsLiking(true);
+  
+      try {
+        setIsLiked((prev) => !prev);
+        setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+  
+        // 좋아요 상태 변경 API 호출
+        const { isLiked: updatedIsLiked, likes: updatedLikeCount } =
+          await LikeApi.toggleLikePost(communityId, userId);
+  
+        console.log("좋아요 상태:", updatedIsLiked, "좋아요 개수:", updatedLikeCount);
+  
+        // API에서 최신 개수 다시 불러오기
+        const latestLikeCount = await LikeApi.getLikeCount(communityId);
+        setIsLiked(updatedIsLiked);
+        setLikeCount(latestLikeCount);
+      } catch (error) {
+        console.error("좋아요 처리 중 오류 발생:", error);
+      } finally {
+        setIsLiking(false);
+      }
+    };
+    
   const handleLike = async () => {
     try {
-      // 좋아요 토글 API 호출
-      setIsLiked((prev) => !prev);
-      setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
-
-      await toggleLikePost({
-        id: communityId,
-        userId: userId, // 사용자 ID 추가
-      });
-
-      // 최신 좋아요 개수를 서버에서 가져와 업데이트
-      const updatedLikeCount = await getLikeCount("community", communityId);
-
-      setLikeCount(updatedLikeCount); // 서버에서 최신 좋아요 개수 받아서 반영
+      // API 요청을 먼저 보낸 후, 응답 데이터를 기반으로 상태 업데이트
+      const { isLiked: updatedIsLiked, likes: updatedLikeCount } =
+        await LikeApi.toggleLikePost(communityId, userId);
+  
+      console.log("📌 좋아요 상태 업데이트:", updatedIsLiked, "좋아요 개수:", updatedLikeCount);
+  
+      setIsLiked(updatedIsLiked); // 최신 좋아요 상태 반영
+      setLikeCount(updatedLikeCount); // 최신 좋아요 개수 반영
     } catch (error) {
-      console.error("좋아요 처리 중 오류 발생:", error);
+      console.error("❌ 좋아요 처리 중 오류 발생:", error);
     }
   };
+  
 
   // 게시물 삭제
   const handleDeletePost = async () => {
@@ -217,7 +190,7 @@ const PostDetail = () => {
     if (!confirmDelete) return; // 사용자가 취소하면 중단
 
     try {
-      await deletePost(communityId, userId); // userId 추가하여 삭제 요청
+      await CommunityApi.deletePost(communityId, userId); // userId 추가하여 삭제 요청
       alert("게시물이 삭제되었습니다.");
       navigate("/"); // 삭제 후 메인 페이지(또는 목록)로 이동
     } catch (error) {
@@ -231,67 +204,57 @@ const PostDetail = () => {
     navigate(`/edit/${post.id}`, { state: { postData: post } });
   };
 
-  // 댓글 추가
-  const handleAddComment = async () => {
-    if (newComment.trim()) {
-      try {
-        const userId = localStorage.getItem("userId"); // 동적 userId 설정
-        const newCommentData = await addComment(
-          communityId,
-          userId,
-          newComment
-        );
-
-        // 현재 시간을 `createdAt` 필드에 추가
-        const newCommentWithTime = {
-          ...newCommentData,
-          createdAt: new Date().toISOString(), // 현재 시간을 ISO 형식으로 저장
-        };
-
-        setComments([...comments, newCommentWithTime]);
-        setNewComment("");
-      } catch (error) {
-        console.error(" 댓글 추가 중 오류 발생:", error);
-      }
+  // 📌 댓글 추가 (useEffect 바깥으로 이동)
+const handleAddComment = async () => {
+  if (newComment.trim()) {
+    try {
+      const newCommentData = await CommentApi.addComment(
+        communityId,
+        userId,
+        newComment
+      ); // userId를 1로 예시 지정
+      setComments([...comments, newCommentData]); // 기존 댓글에 새 댓글 추가
+      setNewComment("");
+    } catch (error) {
+      console.error("댓글 추가 중 오류 발생:", error);
     }
-  };
+  }
+};
 
-  // 대댓글 추가
-  const handleAddReply = async (commentId) => {
-    console.log("📌 클릭된 댓글 ID:", commentId); // 디버깅 추가
+// 📌 대댓글 추가 (useEffect 바깥으로 이동)
+const handleAddReply = async (commentId) => {
+  console.log("📌 클릭된 댓글 ID:", commentId);
 
-    if (reply[commentId]?.trim()) {
-      try {
-        const userId = localStorage.getItem("userId");
-        console.log("📌 대댓글 API 요청 데이터:", {
-          commentId,
-          userId,
-          content: reply[commentId],
-        });
+  // reply 객체에 해당 commentId에 대한 값이 존재하고 공백이 아닌지 확인
+  if (reply[commentId]?.trim()) {
+    try {
+      const userId = localStorage.getItem("userId");
+      console.log("📌 대댓글 API 요청 데이터:", {
+        commentId,
+        userId,
+        content: reply[commentId],
+      });
 
-        const newReplyData = await addReply(
-          commentId,
-          userId,
-          reply[commentId]
-        );
+      const newReplyData = await CommentApi.addReply(
+        commentId,
+        userId,
+        reply[commentId]
+      );
 
-        setComments((prevComments) =>
-          prevComments.map((comment) =>
-            comment.commentId === commentId
-              ? { ...comment, replies: [...comment.replies, newReplyData] }
-              : comment
-          )
-        );
-
-        setReply((prevReply) => ({
-          ...prevReply,
-          [commentId]: "",
-        }));
-      } catch (error) {
-        console.error("❌ 대댓글 추가 중 오류 발생:", error);
-      }
+      // 댓글 목록 업데이트: 해당 댓글의 대댓글 배열에 새 대댓글 추가
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === commentId
+            ? { ...comment, replies: [...comment.replies, newReplyData] }
+            : comment
+        )
+      );
+      setReply({ ...reply, [commentId]: "" });
+    } catch (error) {
+      console.error("대댓글 추가 중 오류 발생:", error);
     }
-  };
+  }
+};
 
   const handleBookmark = async () => {
     try {
@@ -307,7 +270,35 @@ const PostDetail = () => {
       alert("북마크 변경 중 오류 발생!");
     }
   };
+  
 
+  const handleReportSubmit = async () => {
+    if (!selectedReason) {
+      alert("신고 사유를 선택해주세요.");
+      return;
+    }
+  
+    try {
+      await ReportApi.reportPost("community", communityId, userId, selectedReason);
+      alert("신고가 접수되었습니다!");
+  
+      // ✅ 신고한 게시물을 localStorage에 저장하여 숨김
+      const reportedPosts = JSON.parse(localStorage.getItem("reportedPosts") || "[]");
+      if (!reportedPosts.includes(communityId)) {
+        reportedPosts.push(communityId);
+        localStorage.setItem("reportedPosts", JSON.stringify(reportedPosts));
+      }
+  
+      setIsReportOpen(false);
+      navigate("/community"); // ✅ 신고 후 홈으로 이동 (필요 시)
+    } catch (error) {
+      console.error("🚨 신고 요청 오류:", error);
+      alert("신고 중 오류가 발생했습니다.");
+    }
+  };
+  
+  
+  
   if (!post) return <p>게시물을 로드 중입니다...</p>;
 
   return (
@@ -412,11 +403,7 @@ const PostDetail = () => {
           onClick={async () => {
             try {
               const { isLiked: updatedIsLiked, likes: updatedLikeCount } =
-                await toggleLikePost({
-                  id: communityId,
-                  type: "community",
-                  userId: userId, // 유저 ID
-                });
+              await LikeApi.toggleLikePost(communityId, userId); // ✅ LikeApi에서 가져오기
 
               setIsLiked(updatedIsLiked); // 좋아요 상태 업데이트
               setLikeCount(updatedLikeCount); // 좋아요 수 업데이트
@@ -432,7 +419,7 @@ const PostDetail = () => {
             background: "none",
           }}
         >
-          <button className="like-button" onClick={handleLike}>
+          <button className="like-button" onClick={toggleLike}>
             {isLiked ? "❤️" : "🤍"} {likeCount}
           </button>
         </button>

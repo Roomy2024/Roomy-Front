@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"; // Navigate 추가
 import { useMediaQuery } from "react-responsive";
 import Header from "./component/Header";
@@ -13,46 +13,15 @@ import MyPage from "./component/MyPage/MyPage";
 import ProfileChangePage from "./component/MyPage/ProfileChangePage";
 import LoginPage from "./page/LoginPage";
 import BookmarkPage from "./component/MyPage/BookmarkPage";
+import { PostProvider, PostContext } from "./context/PostContext";
+
 
 const App = () => {
-  const [posts, setPosts] = useState([]); // 게시물 상태
-  const [selectedSort, setSelectedSort] = useState("최신순");
+  const { posts, setPosts, selectedSort, handleSort, addNewPost } = useContext(PostContext); // ✅ setPosts 추가
 
   const isDesktop = useMediaQuery({ query: "(min-width:769px)" });
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
-  // 게시물 데이터 가져오기
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("http://43.202.98.145:8000/api/community/getall");
-        setPosts(response.data);
-      } catch (error) {
-        console.error("게시물 데이터를 가져오는 중 오류가 발생했습니다.", error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  // 게시물 추가 핸들러
-  const addNewPost = (newPost) => {
-    setPosts((prevPosts) => [newPost, ...prevPosts]); // 새 게시물을 posts 상태에 추가
-  };
-
-  // 정렬 변경 핸들러
-  const handleSort = (sortOption) => {
-    setSelectedSort(sortOption);
-
-    const sortedPosts = [...posts];
-    if (sortOption === "최신순") {
-      sortedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (sortOption === "좋아요순") {
-      sortedPosts.sort((a, b) => b.likes - a.likes);
-    }
-
-    setPosts(sortedPosts);
-  };
 
   return (
     <div className="App">
@@ -104,8 +73,10 @@ const App = () => {
 
 export default function AppWrapper() {
   return (
+    <PostProvider>
     <Router>
       <App />
     </Router>
+    </PostProvider>
   );
 }
