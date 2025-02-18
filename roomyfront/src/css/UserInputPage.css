@@ -1,0 +1,41 @@
+/* 컨테이너: 버튼들을 감싸는 div */
+.next-possible-container {
+    display: flex;             /* 가로 배치 */
+    justify-content: center;   /* 수평 가운데 정렬 */
+    align-items: center;       /* 수직 가운데 정렬 (height 있으면) */
+    gap: 16px;                 /* 버튼 사이 간격 */
+    margin-top: 20px;          /* 위쪽 여백 */
+    margin-bottom: 40px;       /* 아래쪽 여백 등 원하는 대로 */
+  }
+  
+  /* 공통 버튼 스타일 */
+  .next-possible-btn {
+    min-width: 90px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #AFCE8F;       /* 연두색 계열 */
+    color: #ffffff;                  /* 흰색 글자 */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+  }
+  
+  /* 호버 시 약간 어두워짐 */
+  .next-possible-btn:hover {
+    background-color: #9ABC7A;       /* 조금 진한 연두색 */
+  }
+  
+  /* 클릭(마우스다운) 시 투명도 살짝 */
+  .next-possible-btn:active {
+    opacity: 0.8;
+  }
+  
+  /* 비활성화(다음/완료 버튼이 비활성일 때) */
+  .next-possible-btn:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+    color: #666666;
+  }
+  

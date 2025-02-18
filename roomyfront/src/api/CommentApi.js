@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://43.202.98.145:8000/api/comments",
+  baseURL: "http://localhost:8000/api/comments",
   headers: {
     "Content-Type": "application/json",
   },

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import AuthApi from "../api/AuthApi";
+import axios from "axios";
 
 import "../css/LoginPage.css";
 import { ReactComponent as KakaoLoginBtn } from "../asset/icon/KakaoLoginBtn.svg";
@@ -22,10 +23,18 @@ const LoginPage = () => {
     const accessToken = searchParams.get("access_token");
     const refreshToken = searchParams.get("refresh_token");
     const userId = searchParams.get("userid");
+    const userName = searchParams.get("username");
 
-    // 값이 있으면 localStorage에 저장
+    if (
+      accessToken &&                 // null, undefined, 빈문자열이면 false
+      accessToken !== "null" &&      // 문자열 "null" 방지
+      accessToken !== "undefined"    // 문자열 "undefined" 방지
+    ) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      console.log("헤더 설정 완료:", axios.defaults.headers.common["Authorization"]);
+    }
     if (accessToken) {
-      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", accessToken);
     }
     if (refreshToken) {
       localStorage.setItem("refresh_token", refreshToken);
@@ -34,15 +43,20 @@ const LoginPage = () => {
       localStorage.setItem("user_id", userId);
     }
 
+    if (refreshToken) {
+      axios.defaults.headers.common["X-Refresh-Token"] = refreshToken;
+    }
+    if (userId) {
+      axios.defaults.headers.common["X-User-Id"] = userId;
+    }
+
     if (accessToken || refreshToken || userId) {
-      navigate("/");
+      navigate("/UserInput");
     }
   }, [location, navigate]);
 
   const handleKakaoLogin = async () => {
     try {
-      const authApi = new AuthApi();
-
       window.location.href = "http://localhost:8000/api/oauth2/authorization/kakao";
     } catch (error) {
       console.error("Kakao Login Error:", error);

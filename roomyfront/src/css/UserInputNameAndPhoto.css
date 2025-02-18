@@ -1,0 +1,106 @@
+/* 전체 컨테이너 */
+.userNameAndPhoto-container {
+    position: relative; /* 부모 기준으로 absolute 배치할 수도 있음 */
+    width: 100%;
+    max-width: 360px; /* 예시: 모바일 폭 기준 */
+    margin: 0 auto;
+    background: #ffffff; /* 흰 배경 */
+    padding: 40px 20px; /* 상단 여백 등 조절 */
+  }
+  
+  /* 프로필 사진 + 아이콘 래퍼 */
+  .group-16 {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto; /* 가운데 정렬 예시 */
+    transform: matrix(-1, 0, 0, 1, 0, 0); /* 원본에 있던 transform */
+  }
+  
+  /* 프로필 사진 */
+  .profile-photo-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .profile-photo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+  
+  /* 사진 변경 아이콘 */
+  .photo-icon-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0; 
+    width: 24px;
+    height: 24px;
+    background: #fafafa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .photo-icon {
+    font-size: 16px;
+    color: #000;  /* 아이콘 색 */
+  }
+  
+  /* 이름 라벨 */
+  .name-label {
+    position: relative;
+    width: auto;
+    height: 20px;
+    margin: 16px auto 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #000000;
+  }
+  
+  /* 이름 입력 박스 래퍼 */
+  .user-name-input-wrapper {
+    position: relative;
+    width: 180px; /* 임의 */
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  /* 입력창 */
+  .name-input {
+    width: 180px;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    outline: none;
+  }
+  
+  /* 밑줄 */
+  .line-29 {
+    margin: 0 auto;
+    position: relative;
+    width: 182px;
+    height: 1px;
+    background-color: #acacac;
+  }
+  
+  /* 안내 문구 */
+  .name-desc {
+    position: relative;
+    width: 280px;
+    margin: 20px auto 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 16px;
+    text-align: center;
+    color: #000000;
+  }
+  

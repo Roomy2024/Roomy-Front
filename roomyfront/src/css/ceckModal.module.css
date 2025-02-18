@@ -1,0 +1,48 @@
+.ModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 81px);
+    background-color: rgba(0, 0, 0, 0.5); /* 투명도 있는 회색 배경 */
+    z-index: 1000; /* 모달 뒤에 위치 */
+  }
+  .CancleCheckWrap {
+    border-radius: 10px;
+    gap: 20px;
+    min-width: max-content;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Content {
+  }
+  .CancleBtnWrap {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .ContinueBtn,
+  .CancleBtn,
+  .ConfirmBtn {
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .CancleBtn {
+    color: red;
+  }
+  .ContinueBtn {
+    color: blue;
+  }
+  

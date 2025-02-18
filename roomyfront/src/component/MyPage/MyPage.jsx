@@ -13,7 +13,7 @@ const MyPage = () => {
     navigate("/login");
   };
 
-  // 회원 탈퇴 처리 함수
+  // 회원 탈퇴 처리 함수  
   const handleDeleteAccount = () => {
     alert("회원탈퇴가 완료되었습니다.");
     navigate("/");

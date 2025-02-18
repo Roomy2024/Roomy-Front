@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://43.202.98.145:8000/api";
+const BASE_URL = "http://localhost:8000/api";
 
 // 북마크 추가/삭제 토글
 export const toggleBookmark = async (userId, communityId) => {

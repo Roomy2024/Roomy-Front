@@ -1,10 +1,25 @@
 import createAxios from "./CreateAxios.js";
+import axios from "axios";
 
 class AuthApi {
   constructor() {
-    this.axios = createAxios("/oauth2");
+    this.axios = createAxios("");
   }
 
+  async postAuthData(formData){
+    try{
+      const response = await this.axios.post("/update-userinfo", formData, {
+        headers: {
+          "Authorization" : axios.defaults.headers.common["Authorization"],
+          "Content-Type": "multipart/form-data",
+          withCredentials : true
+        }
+      });
+      return response.data;
+    } catch(error){
+      throw(error)
+    }
+  }
   // 카카오 로그인 URL 받아오기
   async KakaoLogin() {
     try {

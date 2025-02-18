@@ -55,7 +55,7 @@ const CreatePost = ({ addNewPost }) => {
       formData.append(`images[${index}]`, image);
     });
     formData.append("type", tags.join(","));
-    formData.append("userId",1); // 고정된 userId (동적으로 변경 가능)
+    formData.append("userId",localStorage.getItem("user_id")); // 고정된 userId (동적으로 변경 가능)
 
     try {
       if (isEditing) {

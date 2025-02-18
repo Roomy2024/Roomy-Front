@@ -3,7 +3,7 @@ import axios from "axios";
 // const axiosInstance = createAxios("/community");
 
 const axiosInstance = axios.create({
-  baseURL: "http://43.202.98.145:8000/api/community",
+  baseURL: "http://localhost:8000/api/community",
   headers: {
     "Content-Type": "multipart/form-data",
   },

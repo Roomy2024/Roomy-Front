@@ -1,0 +1,103 @@
+/* 전체 컨테이너 스타일 */
+.region-container {
+    background: #ffffff;           /* 흰 배경 */
+    border: 2px solid #AFCE8F;     /* 연두색 테두리 */
+    border-radius: 10px;           /* 살짝 둥근 모서리 */
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(175, 206, 143, 0.4); /* 연두 빛 그림자 */
+  }
+  
+  /* 제목 */
+  .region-container h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #333333;
+  }
+  
+  /* 검색창 래퍼 */
+  .region-search-wrapper {
+    display: flex;
+    margin-bottom: 8px;
+  }
+  
+  /* 검색창 input */
+  .region-search-input {
+    flex: 1;
+    margin-right: 4px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+  }
+  
+  /* 검색 버튼 */
+  .region-search-button {
+    padding: 8px 12px;
+    background-color: #AFCE8F;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+  }
+  .region-search-button:hover {
+    background-color: #9abc7c;
+  }
+  
+  /* 하위 영역 3등분 래퍼 */
+  .region-columns {
+    display: flex;
+    gap: 16px;
+  }
+  
+  /* 개별 칼럼(시,군/구,동) */
+  .region-column {
+    flex: 1;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* 칼럼 제목 */
+  .region-column h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  /* 리스트 */
+  .region-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 리스트 아이템 */
+  .region-item {
+    cursor: pointer;
+    margin-bottom: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* hover 시 */
+  .region-item:hover {
+    background-color: #e2f1c6; /* 좀 더 밝은 연두 톤 */
+  }
+  
+  /* 선택된 아이템 (bold) */
+  .select-item {
+    font-weight: bold;
+    background-color: #d7ebb3; /* 선택되면 좀 더 진한 연두 배경 */
+  }
+  
+  
