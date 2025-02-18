@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchUserBookmarks } from "../../api/BookmarkApi";
-import { fetchPostById } from "../../api/CommunityApi"; // 개별 게시글 정보 가져오기
+import CommunityApi from "../../api/CommunityApi";  
 import { useNavigate } from "react-router-dom";
 import "../../css/BookmarkPage.css";
 
@@ -12,7 +12,7 @@ export const fixImageUrl = (url) => {
 
 const BookmarkPage = () => {
   const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
-  const userId = "2"; // TODO: 실제 로그인된 유저 ID로 변경
+  const userId = "1"; // TODO: 실제 로그인된 유저 ID로 변경
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const BookmarkPage = () => {
       const fetchPostDetails = async () => {
         const postDetails = await Promise.all(
           bookmarks.map(async (bookmark) => {
-            const post = await fetchPostById(bookmark.communityId);
+            const post = await CommunityApi.fetchPostById(bookmark.communityId);
             return post ? { ...bookmark, ...post } : bookmark; // 게시글 정보 병합
           })
         );

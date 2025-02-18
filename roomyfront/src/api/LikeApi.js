@@ -1,123 +1,68 @@
-import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:8000/api/",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import createAxios from "./CreateAxios"; 
 
-
-
-// export const toggleLikePost = async ({ type, id, userId, isLiked }) => {
-//     try {
-//       // API URL 정의
-//       const url = `http://43.202.98.145:8000/api/likes/${type}/${id}/like-toggle`;
-  
-//       // 좋아요 토글 요청
-//       const response = await axiosInstance.post(
-//         url,
-//         { isLiked }, // 좋아요 상태를 본문에 전달
-//         { params: { userId } } // 사용자 ID를 쿼리 파라미터로 전달
-//       );
-  
-//       // 서버에서 반환된 데이터 (isLiked: 좋아요 여부, likes: 좋아요 수)
-//       const { isLiked: updatedIsLiked, likes } = response.data;
-  
-//       // 데이터 리턴
-//       return { isLiked: updatedIsLiked, likes };
-//     } catch (error) {
-//       console.error("좋아요 토글 요청 중 오류 발생:", error);
-  
-//       // 서버 응답이 없거나 상태 코드를 확인
-//       if (error.response) {
-//         console.error("응답 상태 코드:", error.response.status);
-//         console.error("응답 데이터:", error.response.data);
-//       }
-  
-//       throw error;
-//     }
-//   };
-  
-
-// 좋아요 토글 API
-export const toggleLikePost = async ({ type, id, userId }) => {
-  try {
-    // API URL 정의
-    const url = `/likes/${type}/${id}/like-toggle`;
-
-    // 좋아요 토글 요청
-    const response = await axiosInstance.post(
-      url,
-      {}, // 본문 없이 요청 (서버가 현재 좋아요 상태를 판별)
-      { params: { userId } } // 사용자 ID를 쿼리 파라미터로 전달
-    );
-
-    // 서버에서 반환된 데이터 (isLiked: 좋아요 여부, likes: 좋아요 수)
-    const { isLiked: updatedIsLiked, likes } = response.data;
-
-    // 데이터 리턴
-    return { isLiked: updatedIsLiked, likes };
-  } catch (error) {
-    console.error("좋아요 토글 요청 중 오류 발생:", error);
-
-    // 서버 응답이 없거나 상태 코드를 확인
-    if (error.response) {
-      console.error("응답 상태 코드:", error.response.status);
-      console.error("응답 데이터:", error.response.data);
-    }
-
-    throw error;
+class LikeApi {
+  constructor() {
+    this.axios = createAxios("/likes");
   }
-};
 
-  // 좋아요 상태 확인 API 호출
-  export const checkIsLiked = async (type, id) => {
+  // 좋아요 토글 API
+  async toggleLikePost(communityId, userId) {
+    if (!communityId || !userId) {
+      console.error("좋아요 토글 오류: communityId 또는 userId가 비어 있음", { communityId, userId });
+      return { isLiked: false, likes: 0 };
+    }
+  
     try {
-      // 좋아요 여부 확인 요청
-      const response = await axiosInstance.get(
-        `http://43.202.98.145:8000/api/likes/${type}/${id}/is-liked` // URL 경로에 기본 API 주소 포함
-      );
+      console.log("좋아요 API 호출:", { communityId, userId });
   
-      // 서버에서 반환된 좋아요 여부 데이터
-      const { isLiked } = response.data;
+      const response = await this.axios.post(`/${communityId}/like-toggle`, {}, { params: { userId } });
   
-      // 좋아요 여부 반환
-      return isLiked;
+      // 🔥 응답 구조 확인
+      console.log("📌 좋아요 API 응답:", response);
+  
+      if (!response.data || typeof response.data !== "object") {
+        console.error("좋아요 API 응답이 예상과 다릅니다:", response);
+        return { isLiked: false, likes: 0 };
+      }
+  
+      // ✅ 응답 데이터 구조 변경 처리
+      if (typeof response.data.isLiked === "undefined" || typeof response.data.likes === "undefined") {
+        console.warn("⚠️ API 응답 데이터가 예상과 다름, 변환 시도:", response.data);
+  
+        // 🚀 응답이 `{ data: 1 }` 형식일 경우 강제 변환 (추정)
+        return { isLiked: response.data.data === 1, likes: 0 };
+      }
+  
+      return response.data;
+    } catch (error) {
+      console.error("좋아요 토글 요청 중 오류 발생:", error);
+      return { isLiked: false, likes: 0 };
+    }
+  }
+  
+
+  // 현재 사용자의 좋아요 상태 확인
+  async checkIsLiked(communityId, userId) {
+    try {
+      const response = await this.axios.get(`/${communityId}/is-liked`, { params: { userId } });
+      return response.data.isLiked;
     } catch (error) {
       console.error("좋아요 상태 확인 중 오류 발생:", error);
-  
-      // 서버 응답이 없거나 상태 코드를 확인
-      if (error.response) {
-        console.error("응답 상태 코드:", error.response.status);
-        console.error("응답 데이터:", error.response.data);
-      }
-  
-      throw error;
+      return false;
     }
-  };
-  
-  
-  export const getLikeCount = async (type, id) => {
-    try {
-      // 좋아요 수 확인 요청
-      const response = await axiosInstance.get(`/likes/${type}/${id}/count`); // 경로 수정
-      // 서버에서 반환된 데이터 구조에서 count 추출
-      const { count } = response.data;
-  
-      // 좋아요 수 반환
-      return count;
-    } catch (error) {
-      console.error("좋아요 수 확인 중 오류 발생:", error);
-  
-      // 서버 응답이 없거나 상태 코드를 확인
-      if (error.response) {
-        console.error("응답 상태 코드:", error.response.status);
-        console.error("응답 데이터:", error.response.data);
-      }
-  
-      throw error;
-    }
-  };
+  }
 
-  
+  // 좋아요 개수 조회 API
+  async getLikeCount(communityId) {
+    try {
+      const response = await this.axios.get(`/${communityId}/count`);
+      return response.data.count ?? 0;
+    } catch (error) {
+      console.error("좋아요 개수 조회 중 오류 발생:", error);
+      return 0;
+    }
+  }
+}
+
+export default new LikeApi();

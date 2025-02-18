@@ -53,8 +53,10 @@ const App = () => {
 
 export default function AppWrapper() {
   return (
+    <PostProvider>
     <Router>
       <App />
     </Router>
+    </PostProvider>
   );
 }

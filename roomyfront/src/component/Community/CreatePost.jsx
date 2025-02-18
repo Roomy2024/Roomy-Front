@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import "../../css/CreatePost.css";
-import { createPost, updatePost } from "../../api/CommunityApi";
+import CommunityApi from "../../api/CommunityApi";
 
 const CreatePost = ({ addNewPost }) => {
   const navigate = useNavigate();
@@ -60,11 +60,11 @@ const CreatePost = ({ addNewPost }) => {
     try {
       if (isEditing) {
         // 기존 게시물 수정
-        await updatePost(postData.id, formData);
+        await CommunityApi.updatePost(postData.id, formData);
         alert("게시물이 수정되었습니다!");
       } else {
         // 새 게시물 생성
-        const response = await createPost(formData);
+        const response = await CommunityApi.createPost(formData);
         console.log("API 응답:", response);
         alert("게시물이 저장되었습니다!");
 
@@ -99,7 +99,7 @@ const CreatePost = ({ addNewPost }) => {
       <div className="create-post-tags">
         <label>태그</label>
         <div className="tag-options">
-          {["게시판", "꿀  팁", "레시피"].map((tag) => (
+          {["게시판", "꿀팁", "레시피"].map((tag) => (
             <button
               key={tag}
               type="button"
