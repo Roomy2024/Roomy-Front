@@ -26,7 +26,10 @@ const PostDetail = () => {
   const { id: communityId } = useParams(); // URL에서 id 가져오기
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이드 인덱스 관리
   const navigate = useNavigate();
-  const userId = "1"; // 현재 로그인한 사용자 ID (테스트 값, 실제 구현에서는 동적으로 할당)
+  const userId = localStorage.getItem("userId") || null; // localStorage에서 userId 가져오기
+  const [communityPosts, setCommunityPosts] = useState([]);
+
+
   const [replyContent, setReplyContent] = useState({}); // 대댓글 입력 상태
   
   //   const { user } = useAuth();
@@ -279,8 +282,10 @@ const handleAddReply = async (commentId) => {
     }
   
     try {
+      console.log("🚨 신고 요청:", { communityId, userId, selectedReason });
+  
       await ReportApi.reportPost("community", communityId, userId, selectedReason);
-      alert("신고가 접수되었습니다!");
+      alert("🚨 신고가 접수되었습니다!");
   
       // ✅ 신고한 게시물을 localStorage에 저장하여 숨김
       const reportedPosts = JSON.parse(localStorage.getItem("reportedPosts") || "[]");
@@ -289,13 +294,17 @@ const handleAddReply = async (commentId) => {
         localStorage.setItem("reportedPosts", JSON.stringify(reportedPosts));
       }
   
+      // ✅ 신고한 게시물을 즉시 UI에서 숨김
+      setCommunityPosts((prevPosts) => prevPosts.filter((post) => post.id !== communityId));
+  
       setIsReportOpen(false);
-      navigate("/community"); // ✅ 신고 후 홈으로 이동 (필요 시)
+      navigate("/community"); // ✅ 신고 후 커뮤니티 페이지로 이동
     } catch (error) {
       console.error("🚨 신고 요청 오류:", error);
       alert("신고 중 오류가 발생했습니다.");
     }
   };
+  
   
   
   
@@ -503,44 +512,36 @@ const handleAddReply = async (commentId) => {
       </div>
 
       {/* 신고 메뉴 */}
-      {isReportOpen && (
-        <div className="report-menu">
-          <h2>신고 사유를 선택하세요</h2>
-          <ul className="report-reasons">
-            {reportReasons.map((reason, index) => (
-              <li key={index}>
-                <label>
-                  <input
-                    type="radio"
-                    name="report-reason"
-                    value={reason}
-                    onChange={(e) => setSelectedReason(e.target.value)}
-                    checked={selectedReason === reason}
-                  />
-                  {reason}
-                </label>
-              </li>
-            ))}
-          </ul>
-          <div className="report-actions">
-            <button
-              onClick={() => {
-                alert("신고가 접수되었습니다!");
-                setIsReportOpen(false);
-              }}
-              className="report-menu-button"
-            >
-              신고
-            </button>
-            <button
-              onClick={() => setIsReportOpen(false)}
-              className="report-menu-cancel"
-            >
-              취소
-            </button>
-          </div>
-        </div>
-      )}
+{isReportOpen && (
+  <div className="report-menu">
+    <h2>신고 사유를 선택하세요</h2>
+    <ul className="report-reasons">
+      {reportReasons.map((reason, index) => (
+        <li key={index}>
+          <label>
+            <input
+              type="radio"
+              name="report-reason"
+              value={reason}
+              onChange={(e) => setSelectedReason(e.target.value)}
+              checked={selectedReason === reason}
+            />
+            {reason}
+          </label>
+        </li>
+      ))}
+    </ul>
+    <div className="report-actions">
+      <button onClick={handleReportSubmit} className="report-menu-button">
+        신고
+      </button>
+      <button onClick={() => setIsReportOpen(false)} className="report-menu-cancel">
+        취소
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

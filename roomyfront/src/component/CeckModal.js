@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../css/checkModal.module.css";
+import styles from "../css/ceckModal.module.css";
 
 function CheckModal({
     onClose, // Close함수

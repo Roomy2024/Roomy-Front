@@ -34,7 +34,7 @@ const LoginPage = () => {
       console.log("헤더 설정 완료:", axios.defaults.headers.common["Authorization"]);
     }
     if (accessToken) {
-      localStorage.setItem("refresh_token", accessToken);
+      localStorage.setItem("accessToken", accessToken);
     }
     if (refreshToken) {
       localStorage.setItem("refresh_token", refreshToken);
@@ -49,6 +49,7 @@ const LoginPage = () => {
     if (userId) {
       axios.defaults.headers.common["X-User-Id"] = userId;
     }
+    const redirectPath = location.state?.from?.pathname || "/community";
 
     if (accessToken || refreshToken || userId) {
       navigate("/UserInput");

@@ -10,7 +10,7 @@ const CreatePostButton = () => {
   return (
     <button
       className="create-post-button"
-      onClick={() => navigate("/create-post")}
+      onClick={() => navigate("/community/create")}
     >
       <img src={penIcon} alt="Create Post" className="pen-icon" />
     </button>

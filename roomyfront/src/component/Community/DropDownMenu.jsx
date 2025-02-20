@@ -262,6 +262,7 @@ import { Link } from "react-router-dom";
 import "../../css/DropDownMenu.css";
 import CommunityApi from "../../api/CommunityApi";
 import LikeApi from "../../api/LikeApi";
+import CreatePostButton from "./CreatePostButton";
 
 const userId = localStorage.getItem("userId") || "guest";
 const pageSize = 10;
@@ -417,6 +418,7 @@ const DropDownMenu = () => {
 
   return (
     <div className="dropdown-container">
+      <CreatePostButton />
       <div className="menu-container">
         <button className={`dropdown-button ${isMenuOpen ? "open" : ""}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {selectedMenuItem}

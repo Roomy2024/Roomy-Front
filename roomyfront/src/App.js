@@ -15,6 +15,7 @@ import LoginPage from "./page/LoginPage";
 import BookmarkPage from "./component/MyPage/BookmarkPage";
 import UserInputPage from './page/UserInputPage';
 
+
 const App = () => {
   
   const [posts, setPosts] = useState([]); // 게시물 상태
@@ -26,12 +27,6 @@ const App = () => {
   const location = useLocation()
   const hideHeaderNavPaths = ["/loginpage" , "/UserInput"]
   const shouldHideHeaderNav = hideHeaderNavPaths.includes(location.pathname)
-
-
-  
-
-  // 정렬 변경 핸들러
-  
 
   return (
     <div className="App">
@@ -45,6 +40,9 @@ const App = () => {
         <Route path="/edit/:id" element={<CreatePost />} />
         <Route path="/bookmark" element={<BookmarkPage />} />
         <Route path="/UserInput" element ={<UserInputPage/>} />
+        <Route path="/community" element={<DropDownMenu/>} />
+        <Route path="/community/create" element={<CreatePost />} />
+        <Route path="/create-post" element={<CreatePost />} />
       </Routes>
       { !shouldHideHeaderNav && <NavBar /> }
     </div>
@@ -53,10 +51,10 @@ const App = () => {
 
 export default function AppWrapper() {
   return (
-    <PostProvider>
+    
     <Router>
       <App />
     </Router>
-    </PostProvider>
+    
   );
 }
