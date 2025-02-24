@@ -50,7 +50,7 @@ const UserInputPage = () => {
       }, [nextPossible]);
       const navigate = useNavigate();
       const goHome = () => {
-        navigate(`/`);
+        navigate(`/community/`);
       };
 
     

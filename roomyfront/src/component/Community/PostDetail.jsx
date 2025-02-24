@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation} from "react-router-dom";
 import { fetchBookmarkStatus, toggleBookmark } from "../../api/BookmarkApi";
 import CommentApi from "../../api/CommentApi";
 import CommunityApi from "../../api/CommunityApi";
@@ -26,9 +26,9 @@ const PostDetail = () => {
   const { id: communityId } = useParams(); // URL에서 id 가져오기
   const [currentSlide, setCurrentSlide] = useState(0); // 슬라이드 인덱스 관리
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId") || null; // localStorage에서 userId 가져오기
+  const userId = localStorage.getItem("user_id") || null; // localStorage에서 userId 가져오기
   const [communityPosts, setCommunityPosts] = useState([]);
-
+  const location = useLocation();
 
   const [replyContent, setReplyContent] = useState({}); // 대댓글 입력 상태
   
@@ -135,7 +135,7 @@ const PostDetail = () => {
     const now = new Date();
     const commentTime = new Date(timestamp); // ISO 형식 변환
     const diff = Math.floor((now - commentTime) / 1000); // 초 단위 차이 계산
-
+    if (diff < 0) return "방금 전";
     if (diff < 60) return `${diff}초 전`;
     if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
     if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
@@ -171,16 +171,16 @@ const PostDetail = () => {
     
   const handleLike = async () => {
     try {
-      // API 요청을 먼저 보낸 후, 응답 데이터를 기반으로 상태 업데이트
       const { isLiked: updatedIsLiked, likes: updatedLikeCount } =
         await LikeApi.toggleLikePost(communityId, userId);
   
-      console.log("📌 좋아요 상태 업데이트:", updatedIsLiked, "좋아요 개수:", updatedLikeCount);
+      setIsLiked(updatedIsLiked);
+      setLikeCount(updatedLikeCount);
   
-      setIsLiked(updatedIsLiked); // 최신 좋아요 상태 반영
-      setLikeCount(updatedLikeCount); // 최신 좋아요 개수 반영
+      // ✅ location state 업데이트 (선택적)
+      navigate(location.pathname, { state: { ...location.state, updatedIsLiked, updatedLikeCount } });
     } catch (error) {
-      console.error("❌ 좋아요 처리 중 오류 발생:", error);
+      console.error("좋아요 처리 중 오류 발생:", error);
     }
   };
   
@@ -192,10 +192,13 @@ const PostDetail = () => {
     );
     if (!confirmDelete) return; // 사용자가 취소하면 중단
 
+    const userId = localStorage.getItem("user_id");
+    console.log("userid",userId);
+
     try {
       await CommunityApi.deletePost(communityId, userId); // userId 추가하여 삭제 요청
       alert("게시물이 삭제되었습니다.");
-      navigate("/"); // 삭제 후 메인 페이지(또는 목록)로 이동
+      navigate("/community/"); // 삭제 후 메인 페이지(또는 목록)로 이동
     } catch (error) {
       console.error("게시물 삭제 중 오류 발생:", error);
       alert("게시물 삭제에 실패했습니다.");
@@ -231,7 +234,7 @@ const handleAddReply = async (commentId) => {
   // reply 객체에 해당 commentId에 대한 값이 존재하고 공백이 아닌지 확인
   if (reply[commentId]?.trim()) {
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = localStorage.getItem("user_id");
       console.log("📌 대댓글 API 요청 데이터:", {
         commentId,
         userId,
@@ -428,10 +431,11 @@ const handleAddReply = async (commentId) => {
             background: "none",
           }}
         >
-          <button className="like-button" onClick={toggleLike}>
+         
+        </button>
+        <button className="like-button" onClick={toggleLike}>
             {isLiked ? "❤️" : "🤍"} {likeCount}
           </button>
-        </button>
 
         <span className="comment-count">💬 {comments.length}</span>
       </div>

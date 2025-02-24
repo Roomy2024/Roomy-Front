@@ -13,7 +13,7 @@ function Header() {
   };
 
   const goHome =() => {
-    navigate("/") //홈 화면 이동 Link 사용이랑 navigate 을 사용한 onClick 둘 중 뭐가 나은가
+    navigate("/community/") //홈 화면 이동 Link 사용이랑 navigate 을 사용한 onClick 둘 중 뭐가 나은가
   }
 
 //나중에 세션이 추가될시 코드 추가
@@ -39,7 +39,7 @@ function Header() {
   </div>
 
   {/* 중앙 로고 */}
-  <Link to="/" className="link">
+  <Link to="/community/" className="link">
     <h1 className="title">Roomy</h1>
   </Link>
 

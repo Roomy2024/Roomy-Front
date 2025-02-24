@@ -32,6 +32,8 @@ const App = () => {
     <div className="App">
       { !shouldHideHeaderNav && <Header /> }
       <Routes>   
+        <Route path="/" element={<DropDownMenu/>} />
+
         <Route path="/notifications" element={<NotificationList />} />
         <Route path="/community/:id" element={<PostDetail />} />
         <Route path="/mypage" element={<MyPage />} />

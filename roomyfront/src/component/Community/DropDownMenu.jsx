@@ -279,7 +279,7 @@ const getRelativeTime = (timestamp) => {
   const now = new Date();
   const commentTime = new Date(timestamp);
   const diff = Math.floor((now - commentTime) / 1000);
-
+  if (diff < 0) return "방금 전";
   if (diff < 60) return `${diff}초 전`;
   if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
   if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;

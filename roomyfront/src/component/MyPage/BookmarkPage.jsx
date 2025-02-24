@@ -5,30 +5,53 @@ import { useNavigate } from "react-router-dom";
 import "../../css/BookmarkPage.css";
 
 export const fixImageUrl = (url) => {
-  if (!url) return "/default-thumbnail.jpg"; // 기본 이미지 설정
-  if (url.startsWith("http")) return url; // 절대 URL이면 그대로 사용
-  return `http://43.202.98.145:8000/api${url}`; // 상대 URL이면 변환
+  if (!url) return "/default-thumbnail.jpg";
+  if (url.startsWith("http")) return url;
+  return `http://43.202.98.145:8000/api${url}`;
+};
+
+// ✅ 상대적 시간 계산 함수 추가
+const getRelativeTime = (timestamp) => {
+  if (!timestamp) return "시간 정보 없음";
+
+  const now = new Date();
+  const postTime = new Date(timestamp);
+  const diff = Math.floor((now - postTime) / 1000);
+
+  if (diff < 0) return "방금 전";
+  if (diff < 60) return `${diff}초 전`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+  return `${Math.floor(diff / 86400)}일 전`;
 };
 
 const BookmarkPage = () => {
   const [bookmarkedPosts, setBookmarkedPosts] = useState([]);
-  const userId = "1"; // TODO: 실제 로그인된 유저 ID로 변경
+  const userId = localStorage.getItem("user_id") || null;
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadBookmarks = async () => {
-      const bookmarks = await fetchUserBookmarks(userId);
-      console.log("📌 북마크 API 응답 데이터:", bookmarks);
+      if (!userId) {
+        console.warn("유저 정보가 없습니다. 로그인해주세요.");
+        return;
+      }
 
-      // 북마크된 게시글의 communityId를 이용해 개별 게시글 정보 가져오기
+      const bookmarks = await fetchUserBookmarks(userId);
+
       const fetchPostDetails = async () => {
         const postDetails = await Promise.all(
           bookmarks.map(async (bookmark) => {
             const post = await CommunityApi.fetchPostById(bookmark.communityId);
-            return post ? { ...bookmark, ...post } : bookmark; // 게시글 정보 병합
+            return post
+              ? { 
+                  ...bookmark,
+                  ...post,
+                  timeAgo: getRelativeTime(post.createdAt) // ✅ 여기에 추가
+                }
+              : bookmark;
           })
         );
-        console.log("📌 게시글 정보 추가된 북마크 데이터:", postDetails);
         setBookmarkedPosts(postDetails);
       };
 
@@ -55,7 +78,7 @@ const BookmarkPage = () => {
                 <div className="post-title">{post.title || "제목 없음"}</div>
                 <div className="post-meta">
                   <span>작성자: {post.author || "익명"}</span>
-                  <span> · {post.timeAgo || "시간 정보 없음"}</span>
+                  <span> · {post.timeAgo}</span> {/* ✅ 여기에 적용됨 */}
                 </div>
                 <div className="post-actions">
                   <div className="like-button">
@@ -65,7 +88,6 @@ const BookmarkPage = () => {
                 </div>
               </div>
 
-              {/* 대표 이미지 표시 (게시글 이미지가 있으면 첫 번째 이미지 사용) */}
               <img
                 className="post-image"
                 src={fixImageUrl(post.imageUrls?.[0] || post.thumbnail || "")}
